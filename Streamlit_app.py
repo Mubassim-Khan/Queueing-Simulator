@@ -1,8 +1,18 @@
 import streamlit as st
 from simulator import simulator
 
+from PIL import Image
+
+# Set the title & favicon of the tab
+favicon = Image.open("data/logo.png")
+st.set_page_config(page_title="Simulation Project", page_icon = favicon, initial_sidebar_state = 'auto')
+
+
 # Title for the app
-st.title("Simulation UI")
+st.title("Simulation & Modeling Simulator Project | Group-15")
+
+# Cover line for the app
+st.write("<names>")
 
 # Input fields
 num_simulations = st.number_input("Number of Simulations", min_value=1)
@@ -52,7 +62,7 @@ if st.button("Run Simulation"):
                 
                 # Display server utilization
                 st.subheader("Server Utilization")
-                st.write(server_utilization)
+                st.write(f"**Total utilization time, server took: {server_utilization[0]:.2f} seconds**")
                 
                 # Display Gantt chart
                 st.subheader("Gantt Chart")
