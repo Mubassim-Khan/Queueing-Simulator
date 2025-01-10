@@ -41,7 +41,6 @@ def create_gantt_chart(num_servers, start_times, end_times, server_allocations):
         axes[server_idx].set_xlabel("Time", fontsize=10)
         axes[server_idx].grid(axis='x', linestyle='--', alpha=0.7)
 
-    # plt.subplots_adjust(hspace=5.3, top=5.3, bottom=3.3)
     plt.tight_layout()
     return fig
 
