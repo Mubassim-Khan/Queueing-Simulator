@@ -1,25 +1,28 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import math
 
 # Function to generate times based on the chosen distribution
 def generate_times(distribution, size, low, high):
-    if distribution == "Poisson":
-        lam = float(input("Enter the lambda parameter for Poisson distribution: "))
-        times = np.random.poisson(lam, size)
-    elif distribution == "Exponential":
-        scale = float(input("Enter the mean (1/lambda) for Exponential distribution: "))
-        times = np.random.exponential(scale, size)
-    elif distribution == "Uniform":
-        low = float(input("Enter the minimum value for Uniform distribution: "))
-        high = float(input("Enter the maximum value for Uniform distribution: "))
-        times = np.random.uniform(low, high, size)
-    elif distribution == "Normal":
-        mean = float(input("Enter the mean for Normal distribution: "))
-        std_dev = float(input("Enter the standard deviation for Normal distribution: "))
-        times = np.random.normal(mean, std_dev, size)
-    else:
-        raise ValueError("Invalid distribution selected.")
+    # try catch block
+    try:
+        if distribution == "poisson":
+            lam = float(input("Enter the lambda parameter for Poisson distribution: "))
+            times = np.random.poisson(lam, size)
+        elif distribution == "exponential":
+            scale = float(input("Enter the mean (1/lambda) for Exponential distribution: "))
+            times = np.random.exponential(scale, size)
+        elif distribution == "uniform":
+            low = float(input("Enter the minimum value for Uniform distribution: "))
+            high = float(input("Enter the maximum value for Uniform distribution: "))
+            times = np.random.uniform(low, high, size)
+        elif distribution == "normal":
+            mean = float(input("Enter the mean for Normal distribution: "))
+            std_dev = float(input("Enter the standard deviation for Normal distribution: "))
+            times = np.random.normal(mean, std_dev, size)
+    except ValueError as e:
+        raise "Invalid distribution selected: {}".format(e)
 
     return np.clip(times, low, high).astype(int)
 
@@ -49,11 +52,11 @@ def simulator():
     num_servers = int(input("Enter the number of servers: "))
 
     # Generate interarrival times
-    arrival_dist = input("Select distribution for inter-arrival times (Poisson, Exponential, Uniform, Normal): ")
+    arrival_dist = input("Select distribution for inter-arrival times (Poisson, Exponential, Uniform, Normal): ").lower()
     interarrival_times = generate_times(arrival_dist, num_simulations, 0, 9)
 
     # Generate service times
-    service_dist = input("Select distribution for service times (Poisson, Exponential, Uniform, Normal): ")
+    service_dist = input("Select distribution for service times (Poisson, Exponential, Uniform, Normal): ").lower()
     service_times = generate_times(service_dist, num_simulations, 1, 10)
 
     # Generate priority column if required
@@ -114,7 +117,7 @@ def simulator():
     avg_turnaround_time = np.mean(turnaround_times)
     avg_wait_time = np.mean(wait_times)
     avg_response_time = np.mean(response_times)
-    server_utilization = [round(servers[i] / arrival_times[-1], 2) for i in range(num_servers)]
+    server_utilization = [float(round(servers[i] / arrival_times[-1], 2)) for i in range(num_servers)]
     queue_length = np.sum(wait_times > 0)
     prob_waiting = queue_length / num_simulations
 
@@ -123,14 +126,14 @@ def simulator():
     print("\nTable 2:")
     print(table2)
     print("\nMetrics:")
-    print(f"Average Interarrival Time: {avg_interarrival_time}")
-    print(f"Average Service Time: {avg_service_time}")
-    print(f"Average Turnaround Time: {avg_turnaround_time}")
-    print(f"Average Wait Time: {avg_wait_time}")
-    print(f"Average Response Time: {avg_response_time}")
+    print(f"Average Interarrival Time: {round(avg_interarrival_time, 3)}")
+    print(f"Average Service Time: {round(avg_service_time, 3)}")
+    print(f"Average Turnaround Time: {round(avg_turnaround_time,3)}")
+    print(f"Average Wait Time: {round(avg_wait_time, 3)}")
+    print(f"Average Response Time: {round(avg_response_time, 3)}")
     print(f"Server Utilization: {server_utilization}")
-    print(f"Queue Length: {queue_length}")
-    print(f"Probability of Waiting Customers: {prob_waiting}")
+    print(f"Queue Length: {round(queue_length, 3)}")
+    print(f"Probability of Waiting Customers: {round(prob_waiting, 3)}")
 
     # Gantt Chart
     create_gantt_chart(num_servers, start_times, end_times, server_allocations)
