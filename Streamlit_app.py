@@ -11,8 +11,14 @@ st.set_page_config(page_title="Simulation Project", page_icon = favicon, initial
 # Title for the app
 st.title("Simulation & Modeling Simulator Project | Group-15")
 
-# Cover line for the app
-st.write("<names>")
+# Seat no. and names
+st.write("""
+         Syed Nabeel Hussian - B21110006135
+         Ibad Hussain - B21110006046
+         Syed Fahad Ahmed - B21110006128
+         Afaq Malik - B20102074
+         Mubassim Ahmed Khan - B21110006060
+         """)
 
 # Input fields
 num_simulations = st.number_input("Number of Simulations", min_value=1)
