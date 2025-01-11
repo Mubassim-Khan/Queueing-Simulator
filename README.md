@@ -54,6 +54,12 @@ git clone https://github.com/Mubassim-Khan/Queueing-Simulator.git
 
 2. Open the project in your preferred code editor.
 
+3. Install the project dependencies using pip:
+
+```bash
+pip install -r requirements.txt
+```
+
 3. Run the project
 
 ```bash
