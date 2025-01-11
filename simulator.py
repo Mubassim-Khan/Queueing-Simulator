@@ -41,7 +41,7 @@ def create_gantt_chart(num_servers, start_times, end_times, server_allocations):
         axes[server_idx].set_xlabel("Time", fontsize=10)
         axes[server_idx].grid(axis='x', linestyle='--', alpha=0.7)
 
-    plt.tight_layout()
+    plt.show()
     return fig
 
 # Main function
@@ -103,7 +103,7 @@ def simulator(input_handler = None):
         "Server": server_allocations
     })
 
-    server_utilization = [float(round(servers[i] / arrival_times[-1], 2)) for i in range(num_servers)]
+    server_utilization = [float(round(servers[i] / end_times[-1], 2)) for i in range(num_servers)]
     
     # Gantt Chart
     gantt_chart = create_gantt_chart(num_servers, start_times, end_times, server_allocations)

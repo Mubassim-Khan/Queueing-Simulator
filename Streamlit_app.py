@@ -5,7 +5,7 @@ from PIL import Image
 
 # Set the title & favicon of the tab
 favicon = Image.open("data/logo.png")
-st.set_page_config(page_title="Simulation Project", page_icon = favicon, initial_sidebar_state = 'auto')
+st.set_page_config(page_title="Group-15 | Simulation Project", page_icon = favicon, initial_sidebar_state = 'auto')
 
 
 # Title for the app
@@ -64,15 +64,21 @@ if st.button("Run Simulation"):
                 table_data, server_utilization, gantt_chart = simulator(input_handler)
                 
                 # Display results in Streamlit UI
-                st.subheader("Simulation Results")
+                st.subheader("Queue Analysis Table")
                 
                 # Display table data
                 st.dataframe(table_data)
                 
                 # Display server utilization
                 st.subheader("Server Utilization")
-                st.write(f"**Total utilization time, server took: {server_utilization[0]:.2f} seconds**")
-                
+                # st.write(f"**Total utilization time, server took: {server_utilization[0]:.2f} seconds**")
+
+                if len(server_utilization) > 1:
+                    for i, utilization in enumerate(server_utilization, start=1):
+                        st.write(f"Utilization time server {i} took: {utilization * 100:.2f}%")
+                else:
+                        st.write(f"Utilization time server 1 took: {server_utilization[0] * 100:.2f}%")
+
                 # Display Gantt chart
                 st.subheader("Gantt Chart")
                 st.pyplot(gantt_chart)
